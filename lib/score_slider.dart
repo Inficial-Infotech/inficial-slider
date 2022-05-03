@@ -25,7 +25,7 @@ class ScoreSlider extends StatefulWidget {
 }
 
 class ScoreSliderState extends State<ScoreSlider> {
-  int _currentScore = 0;
+  int _currentScore = 1;
 
   @override
   void initState() {
@@ -36,7 +36,8 @@ class ScoreSliderState extends State<ScoreSlider> {
   List<Widget> _dots(BoxConstraints size) {
     List<Widget> dots = <Widget>[];
 
-    double width = size.maxWidth / (widget.maxScore - widget.minScore + 1.45);
+    // double width = size.maxWidth / (widget.maxScore - widget.minScore + 1.45);
+    double width = (size.maxWidth / widget.maxScore) - 1.3;
     double selectedScoreRadius = (widget.height * 0.7) / 2;
     double dotRadius = (widget.height * 0.25) / 1;
 
@@ -96,7 +97,7 @@ class ScoreSliderState extends State<ScoreSlider> {
     int calculatedScore = (x ~/ socreWidth) + widget.minScore;
     if (calculatedScore != _currentScore &&
         calculatedScore <= widget.maxScore &&
-        calculatedScore >= 0) {
+        calculatedScore >= 1) {
       setState(() => _currentScore = calculatedScore);
       if (widget.onScoreChanged != null) {
         widget.onScoreChanged(_currentScore);
@@ -108,6 +109,7 @@ class ScoreSliderState extends State<ScoreSlider> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 60,
+      // width: 400,
       child: LayoutBuilder(
         builder: (context, size) {
           return GestureDetector(
@@ -140,6 +142,7 @@ class ScoreSliderState extends State<ScoreSlider> {
                     child: StepProgressIndicator(
                       // selectedSize: width,
                       // unselectedSize: width,
+                      width: size.maxWidth,
                       totalSteps: 10,
                       currentStep: _currentScore,
                       size: 56,

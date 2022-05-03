@@ -76,13 +76,16 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: ScoreSlider(
-              maxScore: 10,
-              score: 0,
-              backgroundColor: Colors.grey[300],
-              onScoreChanged: (newScore) {},
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 40, right: 40),
+              child: ScoreSlider(
+                maxScore: 10,
+                score: 1,
+                minScore: 1,
+                backgroundColor: Colors.grey[300],
+                onScoreChanged: (newScore) {},
+              ),
             ),
           ),
           const Spacer(),

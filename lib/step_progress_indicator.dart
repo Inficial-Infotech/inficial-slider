@@ -192,6 +192,7 @@ class StepProgressIndicator extends StatelessWidget {
   ///
   /// **NOTE**: if not provided it defaults to [CrossAxisAlignment.center]
   final CrossAxisAlignment stepCrossAxisAlignment;
+  final double? width;
 
   const StepProgressIndicator({
     required this.totalSteps,
@@ -201,6 +202,7 @@ class StepProgressIndicator extends StatelessWidget {
     this.customSize,
     this.selectedSize,
     this.unselectedSize,
+    this.width,
     this.roundedEdges,
     this.gradientColor,
     this.selectedGradientColor,
@@ -397,17 +399,27 @@ class StepProgressIndicator extends StatelessWidget {
 
     getWidth() {
       double size = 0;
-      if (currentStep == 8 || currentStep == 9) {
-        size = indicatorLength * (currentStep / totalSteps) - 10;
+      // if (currentStep == 8 || currentStep == 9) {
+      //   size = indicatorLength * (currentStep / totalSteps) - 10;
+      // } else {
+      //   size = indicatorLength * (currentStep / totalSteps) +
+      //       ((currentStep == 1)
+      //           ? -10
+      //           : (currentStep == 2)
+      //               ? -10
+      //               : (currentStep == 3)
+      //                   ? -10
+      //                   : (currentStep == 7)
+      //                       ? -10
+      //                       : 0);
+      // }
+      if (currentStep == 1) {
+        size = (indicatorLength * (currentStep / totalSteps) - 15);
+      } else if (currentStep == totalSteps) {
+        size = indicatorLength * (currentStep / totalSteps);
       } else {
-        size = indicatorLength * (currentStep / totalSteps) +
-            ((currentStep == 1)
-                ? 10
-                : (currentStep == 2)
-                    ? 10
-                    : 0);
+        size = indicatorLength * (currentStep / totalSteps) - (width! / 16);
       }
-
       return size;
     }
 
