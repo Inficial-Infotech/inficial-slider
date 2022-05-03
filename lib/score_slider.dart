@@ -123,13 +123,17 @@ class ScoreSliderState extends State<ScoreSlider> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
-                border: Border.all(color: Colors.grey, width: 2),
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 2,
+                ),
                 color: (widget.backgroundColor ??
                     Theme.of(context).backgroundColor),
               ),
               height: widget.height,
               child: Stack(
                 fit: StackFit.expand,
+                alignment: Alignment.topCenter,
                 children: <Widget>[
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15),
@@ -138,7 +142,7 @@ class ScoreSliderState extends State<ScoreSlider> {
                       // unselectedSize: width,
                       totalSteps: 10,
                       currentStep: _currentScore,
-                      size: 55,
+                      size: 56,
                       padding: 0,
 
                       selectedColor: Colors.yellow,
