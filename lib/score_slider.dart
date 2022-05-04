@@ -50,21 +50,38 @@ class ScoreSliderState extends State<ScoreSlider> {
           children: [
             Row(
               children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 0, bottom: 0),
-                  height: 100,
-                  width: width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color:
-                        i == _currentScore ? Colors.white : Colors.transparent,
-                  ),
-                ),
+                (i == _currentScore)
+                    ? Container(
+                        margin: const EdgeInsets.only(top: 0, bottom: 0),
+                        width: width,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  offset: Offset(4, 4),
+                                  blurRadius: 10,
+                                  color: Color(0xff263238).withOpacity(0.2))
+                            ]),
+                      )
+                    : Container(
+                        margin: const EdgeInsets.only(top: 0, bottom: 0),
+                        width: width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: i == _currentScore
+                              ? Colors.white
+                              : Colors.transparent,
+                        ),
+                      ),
                 if (i != widget.maxScore)
                   Container(
                     width: 1,
                     margin: const EdgeInsets.only(top: 5, bottom: 5),
-                    color: const Color(0xff4F7F71),
+                    decoration: BoxDecoration(
+                      color: const Color(0xff4F7F71).withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(1),
+                    ),
                   ),
               ],
             ),
@@ -129,6 +146,18 @@ class ScoreSliderState extends State<ScoreSlider> {
                   color: Colors.grey,
                   width: 2,
                 ),
+                boxShadow: [
+                  BoxShadow(
+                      offset: const Offset(5, 5),
+                      blurRadius: 20,
+                      // spreadRadius: 0,
+                      color: const Color(0xff263238).withOpacity(0.04)),
+                  BoxShadow(
+                      offset: const Offset(-5, -5),
+                      blurRadius: 20,
+                      // spreadRadius: 0,
+                      color: const Color(0xff263238).withOpacity(0.04))
+                ],
                 color: (widget.backgroundColor ??
                     Theme.of(context).backgroundColor),
               ),
@@ -156,9 +185,9 @@ class ScoreSliderState extends State<ScoreSlider> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          Color(0xff06B58C).withOpacity(0.5),
-                          Color(0xffFF9800).withOpacity(0.5),
-                          Color(0xffFF5722).withOpacity(0.5)
+                          const Color(0xff06B58C).withOpacity(0.5),
+                          const Color(0xffFF9800).withOpacity(0.5),
+                          const Color(0xffFF5722).withOpacity(0.5)
                         ],
                       ),
                       unselectedGradientColor: const LinearGradient(

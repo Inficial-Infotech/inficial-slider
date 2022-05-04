@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 maxScore: 10,
                 score: 1,
                 minScore: 1,
-                backgroundColor: Colors.grey[300],
+                backgroundColor: Color(0xffE0E0E0),
                 onScoreChanged: (newScore) {},
               ),
             ),
