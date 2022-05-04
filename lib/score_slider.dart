@@ -3,7 +3,7 @@ import 'package:inficial_slider/step_progress_indicator.dart';
 
 class ScoreSlider extends StatefulWidget {
   final double height;
-  final int score;
+   int currentScore;
   final int maxScore;
   final int minScore;
 
@@ -13,7 +13,7 @@ class ScoreSlider extends StatefulWidget {
   ScoreSlider({
     required this.maxScore,
     this.minScore = 0,
-    required this.score,
+    required this.currentScore,
     required this.onScoreChanged,
     this.height = 30,
     this.backgroundColor,
@@ -25,12 +25,12 @@ class ScoreSlider extends StatefulWidget {
 }
 
 class ScoreSliderState extends State<ScoreSlider> {
-  int _currentScore = 1;
+  // int _currentScore = 1;
 
   @override
   void initState() {
     super.initState();
-    _currentScore = widget.score;
+    // _currentScore = widget.score;
   }
 
   List<Widget> _dots(BoxConstraints size) {
@@ -43,14 +43,14 @@ class ScoreSliderState extends State<ScoreSlider> {
 
     for (var i = widget.minScore; i <= widget.maxScore; i++) {
       double currentRadius =
-          i == _currentScore ? selectedScoreRadius : dotRadius;
+          i == widget.currentScore ? selectedScoreRadius : dotRadius;
       dots.add(
         Stack(
           alignment: Alignment.center,
           children: [
             Row(
               children: [
-                (i == _currentScore)
+                (i == widget.currentScore)
                     ? Container(
                         margin: const EdgeInsets.only(top: 0, bottom: 0),
                         width: width,
@@ -69,7 +69,7 @@ class ScoreSliderState extends State<ScoreSlider> {
                         width: width,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: i == _currentScore
+                          color: i == widget.currentScore
                               ? Colors.white
                               : Colors.transparent,
                         ),
@@ -88,7 +88,7 @@ class ScoreSliderState extends State<ScoreSlider> {
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeIn,
-              style: i == _currentScore
+              style: i == widget.currentScore
                   ? const TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -112,12 +112,12 @@ class ScoreSliderState extends State<ScoreSlider> {
     double socreWidth = size.maxWidth / (widget.maxScore - widget.minScore + 1);
     double x = localPosition.dx;
     int calculatedScore = (x ~/ socreWidth) + widget.minScore;
-    if (calculatedScore != _currentScore &&
+    if (calculatedScore != widget.currentScore &&
         calculatedScore <= widget.maxScore &&
         calculatedScore >= 1) {
-      setState(() => _currentScore = calculatedScore);
+      setState(() => widget.currentScore = calculatedScore);
       if (widget.onScoreChanged != null) {
-        widget.onScoreChanged(_currentScore);
+        widget.onScoreChanged(widget.currentScore);
       }
     }
   }
@@ -173,7 +173,7 @@ class ScoreSliderState extends State<ScoreSlider> {
                       // unselectedSize: width,
                       width: size.maxWidth,
                       totalSteps: 10,
-                      currentStep: _currentScore,
+                      currentStep: widget.currentScore,
                       size: 56,
                       padding: 0,
 

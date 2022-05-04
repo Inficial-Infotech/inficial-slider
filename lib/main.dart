@@ -49,7 +49,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _counter = 1;
 
   void _incrementCounter() {
     setState(() {
@@ -81,10 +81,13 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.only(left: 40, right: 40),
               child: ScoreSlider(
                 maxScore: 10,
-                score: 1,
+                currentScore: _counter,
                 minScore: 1,
                 backgroundColor: Color(0xffE0E0E0),
-                onScoreChanged: (newScore) {},
+                onScoreChanged: (newScore) {
+                  _counter = newScore;
+                  setState(() {});
+                },
               ),
             ),
           ),
