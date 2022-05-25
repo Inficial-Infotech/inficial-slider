@@ -9,6 +9,7 @@ class ScoreSlider extends StatefulWidget {
   final int minScore;
   final Color? backgroundColor;
   final Function(int value) onScoreChanged;
+  final Function(int value)? onScoreTap;
   final Function(DragEndDetails value)? onScoreChangeEnd;
 
   ScoreSlider({
@@ -18,6 +19,7 @@ class ScoreSlider extends StatefulWidget {
     required this.currentScore,
     required this.onScoreChanged,
     this.height = 30,
+    this.onScoreTap,
     this.onScoreChangeEnd,
     this.backgroundColor,
   })  : assert(minScore < maxScore),
@@ -119,10 +121,11 @@ class ScoreSliderState extends State<ScoreSlider> {
           return GestureDetector(
             onPanUpdate: (details) {
               _handlePanGesture(size, details.localPosition);
+              widget.onScoreChanged(widget.currentScore);
             },
             onTapUp: (details) {
               _handlePanGesture(size, details.localPosition);
-              widget.onScoreChanged(widget.currentScore);
+              widget.onScoreTap!(widget.currentScore);
             },
             onPanEnd: (details) {
               if (widget.onScoreChangeEnd != null) {
