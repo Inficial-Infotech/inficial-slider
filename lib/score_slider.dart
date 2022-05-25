@@ -3,47 +3,36 @@ import 'package:inficial_slider/step_progress_indicator.dart';
 
 class ScoreSlider extends StatefulWidget {
   final double height;
-   int currentScore;
+  int currentScore;
   final int maxScore;
   final int minScore;
-
   final Color? backgroundColor;
   final Function(int value) onScoreChanged;
+  final Function(DragEndDetails value)? onScoreChangeEnd;
 
   ScoreSlider({
+    Key? key,
     required this.maxScore,
     this.minScore = 0,
     required this.currentScore,
     required this.onScoreChanged,
     this.height = 30,
+    this.onScoreChangeEnd,
     this.backgroundColor,
-  })  : assert(maxScore != null),
-        assert(minScore < maxScore);
+  })  : assert(minScore < maxScore),
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() => ScoreSliderState();
 }
 
 class ScoreSliderState extends State<ScoreSlider> {
-  // int _currentScore = 1;
-
-  @override
-  void initState() {
-    super.initState();
-    // _currentScore = widget.score;
-  }
-
   List<Widget> _dots(BoxConstraints size) {
     List<Widget> dots = <Widget>[];
 
-    // double width = size.maxWidth / (widget.maxScore - widget.minScore + 1.45);
     double width = (size.maxWidth / widget.maxScore) - 1.3;
-    double selectedScoreRadius = (widget.height * 0.7) / 2;
-    double dotRadius = (widget.height * 0.25) / 1;
 
     for (var i = widget.minScore; i <= widget.maxScore; i++) {
-      double currentRadius =
-          i == widget.currentScore ? selectedScoreRadius : dotRadius;
       dots.add(
         Stack(
           alignment: Alignment.center,
@@ -116,9 +105,7 @@ class ScoreSliderState extends State<ScoreSlider> {
         calculatedScore <= widget.maxScore &&
         calculatedScore >= 1) {
       setState(() => widget.currentScore = calculatedScore);
-      if (widget.onScoreChanged != null) {
-        widget.onScoreChanged(widget.currentScore);
-      }
+      widget.onScoreChanged(widget.currentScore);
     }
   }
 
@@ -138,6 +125,11 @@ class ScoreSliderState extends State<ScoreSlider> {
             },
             onPanUpdate: (details) {
               _handlePanGesture(size, details.localPosition);
+            },
+            onPanEnd: (details) {
+              if (widget.onScoreChangeEnd != null) {
+                widget.onScoreChangeEnd!(details);
+              }
             },
             child: Container(
               decoration: BoxDecoration(
@@ -169,17 +161,13 @@ class ScoreSliderState extends State<ScoreSlider> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: StepProgressIndicator(
-                      // selectedSize: width,
-                      // unselectedSize: width,
                       width: size.maxWidth,
                       totalSteps: 10,
                       currentStep: widget.currentScore,
                       size: 56,
                       padding: 0,
-
                       selectedColor: Colors.yellow,
                       unselectedColor: Colors.cyan,
-
                       roundedEdges: const Radius.circular(18),
                       selectedGradientColor: LinearGradient(
                         begin: Alignment.topLeft,
