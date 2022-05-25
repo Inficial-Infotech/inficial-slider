@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:inficial_slider/step_progress_indicator.dart';
 
@@ -105,7 +106,6 @@ class ScoreSliderState extends State<ScoreSlider> {
         calculatedScore <= widget.maxScore &&
         calculatedScore >= 1) {
       setState(() => widget.currentScore = calculatedScore);
-      widget.onScoreChanged(widget.currentScore);
     }
   }
 
@@ -117,14 +117,12 @@ class ScoreSliderState extends State<ScoreSlider> {
       child: LayoutBuilder(
         builder: (context, size) {
           return GestureDetector(
-            onPanDown: (details) {
-              _handlePanGesture(size, details.localPosition);
-            },
-            onPanStart: (details) {
-              _handlePanGesture(size, details.localPosition);
-            },
             onPanUpdate: (details) {
               _handlePanGesture(size, details.localPosition);
+            },
+            onTapUp: (details) {
+              _handlePanGesture(size, details.localPosition);
+              widget.onScoreChanged(widget.currentScore);
             },
             onPanEnd: (details) {
               if (widget.onScoreChangeEnd != null) {
